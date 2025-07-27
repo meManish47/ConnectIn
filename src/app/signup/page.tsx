@@ -6,11 +6,50 @@ import { useEffect, useState } from "react";
 import validateForm from "../utils/action";
 import createUser from "../utils/createuser";
 import toast from "react-hot-toast";
+import { addUserToDB, getUserFromDBbyEmail } from "../actions/prismaActions";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [dob, setDob] = useState({ day: "", month: "", year: "" });
   let debounceTimeout;
   let canShow = true;
+  let userData = [];
+  const router = useRouter();
+  const [isSigning, setIsSigning] = useState(false);
+  async function createuserinDb(formdata) {
+    const values = {
+      name: formdata.get("name") as string,
+      dob: {
+        dob_day: formdata.get("dob_day") as string,
+        dob_month: formdata.get("dob_month") as string,
+        dob_year: formdata.get("dob_year") as string,
+      },
+      email: formdata.get("email") as string,
+      school: formdata.get("school") as string,
+      address: formdata.get("address") as string,
+      password: formdata.get("password") as string,
+    };
+    const dobString = `${values.dob.dob_year}-${values.dob.dob_month.padStart(
+      2,
+      "0"
+    )}-${values.dob.dob_day.padStart(2, "0")}`;
+    const dobDate = new Date(dobString);
+    const userToCreate = {
+      name: formdata.get("name") as string,
+      email: formdata.get("email") as string,
+      dob: dobDate,
+      password: formdata.get("password") as string,
+      school: formdata.get("school") as string,
+      address: formdata.get("address") as string,
+    };
+    const userCreatedObj = await addUserToDB(userToCreate);
+    if (userCreatedObj.success) {
+      toast.success("User added in database");
+    } else {
+      console.log(userCreatedObj.message);
+    }
+  }
+
   async function handleAction(formdata: FormData) {
     clearTimeout(debounceTimeout);
     const createUserObj = await createUser(formdata);
@@ -41,6 +80,25 @@ export default function SignUpPage() {
       debounceTimeout = setTimeout(() => {
         canShow = true;
       }, 1000);
+    } else {
+      console.log(formdata.get("email"));
+      const currentUserObj = await getUserFromDBbyEmail(formdata.get("email"));
+      console.log(currentUserObj);
+      if (currentUserObj?.success) {
+        toast.error("User already exists. Please Log in", {
+          duration: 2000,
+        });
+        console.log("EXISTSS");
+      }
+      //Functiion to create the user after checking if it doesnt exists
+      else {
+        setIsSigning(true);
+        console.log(isSigning);
+        await createuserinDb(formdata);
+        setIsSigning(false);
+        console.log(isSigning);
+        router.push("/login");
+      }
     }
   }
 
@@ -190,7 +248,7 @@ export default function SignUpPage() {
               type="submit"
               className="w-full bg-[#1D6FAA] hover:bg-[#174e87] text-white font-semibold rounded-md py-2 transition duration-300"
             >
-              Sign Up
+              {!isSigning ? <span>Sign in</span> : <span>Wait</span>}
             </button>
           </form>
 
