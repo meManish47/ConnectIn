@@ -43,7 +43,7 @@ export default function LoginPage() {
         >
           <div className="flex flex-col gap-4 items-start justify-between pb-2 mt-4 mb-4">
             <div className=" text-3xl ms-6 font-bold mb-1  tracking-widest text-white">
-              LogIn
+              LogIn to continue
             </div>
             <div className="w-[23vw] flex justify-center">
               <hr className="w-11/12 h-[1px] bg-gray-300  border-none" />
