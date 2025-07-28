@@ -52,3 +52,21 @@ export async function getUserFromDBbyEmail(passedEmail:string){
         }
     }
 }
+
+export async function getUserFromDbBySearchInput(searchInput : string) {
+        try{
+            const user =await prismaClient.user.findMany({
+                where:{
+                    name:{
+                        contains:searchInput.toLowerCase(),
+                        mode:"insensitive"
+                    }
+                }
+            })
+            if(user) return{success:true,user:user}
+            else return{success:false}
+        }
+        catch(err){
+            return{success:false,message:err}
+        }
+}
