@@ -4,6 +4,8 @@ import { IoHome } from "react-icons/io5";
 import { MdPeopleAlt } from "react-icons/md";
 import { FaBell } from "react-icons/fa6";
 import { DropdownMenu } from "@radix-ui/themes";
+import { TbLogout } from "react-icons/tb";
+import LogoutItem from "./logoutItem";
 
 export default function HeaderComponent() {
   return (
@@ -49,7 +51,8 @@ export default function HeaderComponent() {
             </DropdownMenu.Item>
             <DropdownMenu.Separator />
             <DropdownMenu.Item>
-              <span className=" cursor-pointer">Settings</span>
+              <LogoutItem />
+              
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Root>

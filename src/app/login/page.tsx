@@ -1,7 +1,30 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-
+import { setCookies } from "../actions/actions";
+import { getUserFromDBbyEmail } from "../actions/prismaActions";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 export default function LoginPage() {
+  const router = useRouter();
+  //@ts-ignore
+  async function handleLoginSumbit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    setCookies(email);
+    const userExistsObj = await getUserFromDBbyEmail(email);
+    if (userExistsObj?.success) {
+      if (userExistsObj.user?.password === password) {
+        router.push("/");
+      } else {
+        toast.error("Invalid password!! Please try again.", { duration: 2000 });
+      }
+    } else {
+      toast.error("User does not exists .....");
+    }
+  }
   return (
     <div className="w-screen h-screen flex flex-col justify-start py-10 gap-15 items-center bg-[linear-gradient(300deg,_#1D6FAA_20%,_#162a3f_60%)]">
       <div>
@@ -13,8 +36,11 @@ export default function LoginPage() {
           className="h-16 w-80"
         ></Image>
       </div>
-      <div className="h-[75%] w-[25%] rounded-4xl flex flex-col items-center py-4 border-gray-200 bg-[#041a31] shadow-[-4px_2px_22px_rgb(0,0,0,0.7)] inset-shadow-[-8px_-6px_14px_rgb(29,111,170,0.7)]">
-        <form className=" px-2 py-2 w-10/11 h-full  flex flex-col gap-8  items-center ">
+      <div className="min-h-[75vh] min-w-[25vw]  shrink rounded-4xl flex flex-col items-center py-4 border-gray-200 bg-[#041a31] shadow-[-4px_2px_22px_rgb(0,0,0,0.7)] inset-shadow-[-8px_-6px_14px_rgb(29,111,170,0.7)]">
+        <form
+          className=" px-2 py-2 w-10/11 h-full  flex flex-col gap-8  items-center "
+          onSubmit={handleLoginSumbit}
+        >
           <div className="flex flex-col gap-4 items-start justify-between pb-2 mt-4 mb-4">
             <div className=" text-3xl ms-6 font-bold mb-1  tracking-widest text-white">
               LogIn
@@ -26,13 +52,13 @@ export default function LoginPage() {
 
           <div className="h-10 w-13/14 mt-2 flex flex-col">
             <label htmlFor="username" className="text-sm text-gray-100">
-              Enter your username/email <span className="text-red-500">*</span>
+              Enter your email <span className="text-red-500">*</span>
             </label>
             <input
               className="h-10 p-2 placeholder:text-sm text-white tracking-widest  w-full border border-t-0 border-l-0 border-r-0 border-b-2 border-gray-400 focus:focus:outline-none"
               type="text"
-              name="username"
-              id="username"
+              name="email"
+              id="email"
               placeholder="Username"
             />
           </div>

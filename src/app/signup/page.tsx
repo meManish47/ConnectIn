@@ -52,6 +52,7 @@ export default function SignUpPage() {
 
   async function handleAction(formdata: FormData) {
     clearTimeout(debounceTimeout);
+    setIsSigning(true);
     const createUserObj = await createUser(formdata);
     // console.log(createUserObj);
     if (!createUserObj.success) {
@@ -88,11 +89,11 @@ export default function SignUpPage() {
         toast.error("User already exists. Please Log in", {
           duration: 2000,
         });
+        setIsSigning(false);
         console.log("EXISTSS");
       }
       //Functiion to create the user after checking if it doesnt exists
       else {
-        setIsSigning(true);
         console.log(isSigning);
         await createuserinDb(formdata);
         setIsSigning(false);
