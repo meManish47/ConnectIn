@@ -9,7 +9,7 @@ import LogoutItem from "./logoutItem";
 
 export default function HeaderComponent() {
   return (
-    <div className="h-14 w-screen flex px-47 gap-4 sticky top-0  bg-[#F1EFEC] items-center border border-y-1 border-gray-400">
+    <div className="h-14 w-screen flex px-47 gap-4 sticky top-0  bg-[#d4c9beb9] items-center border border-y-1 border-gray-400">
       <Image
         src={"https://i.postimg.cc/jnqm3zqM/darklogo.png"}
         alt="Image"
@@ -52,7 +52,6 @@ export default function HeaderComponent() {
             <DropdownMenu.Separator />
             <DropdownMenu.Item>
               <LogoutItem />
-              
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Root>

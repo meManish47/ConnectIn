@@ -7,7 +7,7 @@ export default function middleware(req:any){
     let user = req.cookies.get("user")?.value
     const pathname = req.nextUrl.pathname
     const protectedPaths = ["/"]
-    console.log(user)
+    // console.log(user)
     if(protectedPaths.includes(pathname)){
         if(!user){
             return NextResponse.redirect("http://localhost:3000/login")

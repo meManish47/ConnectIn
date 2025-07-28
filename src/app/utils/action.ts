@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 export default function validateForm(formData:FormData){
     const errors :string[] =[]
     const values = {
@@ -51,4 +53,10 @@ export default function validateForm(formData:FormData){
     errors.push("Address too short!")
   }
   return errors
+}
+
+export async function getCurrentUserEmail(){
+  const userCookies = await cookies()
+  const userEmail = userCookies.get("user")?.value
+  return userEmail
 }
