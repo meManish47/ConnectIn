@@ -70,3 +70,22 @@ export async function getUserFromDbBySearchInput(searchInput : string) {
             return{success:false,message:err}
         }
 }
+
+export async function updateUserValues(id:string,gender:string,about:string) {
+    try{
+        const user = prismaClient.user.update({
+            where:{
+                id:id,
+            },
+            data:{gender:gender,about:about}
+        })
+        return {
+            success:true,
+            user:user
+        }
+    }
+    catch(err){
+        return{success:false,message:err}
+    }
+
+}

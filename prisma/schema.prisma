@@ -22,4 +22,6 @@ model user {
   password String
   school   String
   address  String
+  gender   String?
+  about    String?
 }
