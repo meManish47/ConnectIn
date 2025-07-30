@@ -24,4 +24,14 @@ model user {
   address  String
   gender   String?
   about    String?
+  posts    posts[]
+}
+
+model posts {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  content  String
+  imageUrl String?
+  postedAt DateTime @default(now())
+  user     user     @relation(fields: [userID], references: [id])
+  userID   String   @db.ObjectId
 }
