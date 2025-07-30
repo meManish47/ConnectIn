@@ -12,7 +12,7 @@ type formType={
 }
 export async function addUserToDB(formdata:formType){
     try{
-        const user = prismaClient.user.create({
+        const user =await prismaClient.user.create({
             //@ts-ignore
             data : formdata
         });

@@ -49,7 +49,8 @@ export default function UserDetailsForm() {
       else {
         const userCreatedObj = await createuserinDb(formdata);
         setIsSigning(false);
-        router.push(`/signup?signUp=b`);
+        console.log("THIS CAME", userCreatedObj);
+        router.push(`/signup?signUp=${userCreatedObj?.userData?.id}`);
       }
     }
   }

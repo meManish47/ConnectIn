@@ -34,7 +34,7 @@ export default function SignUpPage({
           {!signedIn ? (
             <UserDetailsForm />
           ) : (
-            <OptionalForm currentUserEmail={signedIn} />
+            <OptionalForm signUp={searchParams.signUp} />
           )}
 
           <p className="mt-4 text-xs text-center text-gray-500">

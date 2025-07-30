@@ -11,17 +11,14 @@ import {
 } from "@/app/actions/prismaActions";
 import toast from "react-hot-toast";
 
-export default function OptionalForm({
-  currentUserEmail,
-}: {
-  currentUserEmail: string;
-}) {
+export default function OptionalForm({ signUp }) {
+  const id = signUp;
   const router = useRouter();
   const [aboutValue, setAboutValue] = useState(null);
   const [gender, setGender] = useState(null);
   async function handleAction() {
-    const currentUserObj = await getUserFromDBbyEmail(currentUserEmail);
-    const id = currentUserObj?.user?.id;
+    // const currentUserObj = await getUserFromDBbyEmail(currentUserEmail);
+    // const id = currentUserObj?.user?.id;
     const user = await updateUserValues(id, gender, aboutValue);
     toast.success("Success", { duration: 1000 });
     router.push("/login");

@@ -29,6 +29,8 @@ export default async function createuserinDb(formdata:FormData) {
     };
     const userCreatedObj = await addUserToDB(userToCreate);
     if (userCreatedObj.success) {
+      // console.log("ABCDDFEGEHJFJ",userCreatedObj)
+      return userCreatedObj
       toast.success("User added in database");
     } else {
       console.log(userCreatedObj.message);

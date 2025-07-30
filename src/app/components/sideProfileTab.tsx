@@ -14,7 +14,7 @@ export default async function SideProfileTab() {
   const currentUserObj = await getUserFromDBbyEmail(currentUserEmail);
   // console.log(currentUserObj);
   return (
-    <div className="w-full h-full flex flex-col absolute bg-[#e5dfd9]">
+    <div className="w-full h-full flex flex-col absolute bg-white ">
       <div className="w-full h-[35%] bg-gray-300 flex justify-center border-b-1 items-center overflow-hidden">
         <Image
           src={"/default_cover.png"}
