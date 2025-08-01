@@ -3,6 +3,7 @@ import { getCurrentUser } from "../actions/actions";
 import HeaderComponent from "../components/header";
 import AllPostsComponent from "../components/post-components/allposts";
 import UploadPost from "../components/post-components/upload_post";
+import QuoteSection from "../components/quotesComp/quotesection";
 import SideProfileTab from "../components/sideProfileTab";
 export default async function Home() {
   const currentUserObj = await getCurrentUser();
@@ -22,12 +23,7 @@ export default async function Home() {
         <AllPostsComponent userId={userId} userObj={currentUserObj} />
       </div>
       <div className=" flex flex-col gap-2 shrink w-[20%] min-h-10 h-80 justify-center items-center sticky top-18 bg-white rounded-2xl shadow-[1px_1px_3px_rgb(0,0,0,0.7)]">
-        <p className="text-2xl font-medium tracking-wider font-mono">
-          Stay Positive
-        </p>
-        <p className="text-sm font-medium text-gray-400 tracking-wider font-mono">
-          Quotes Section
-        </p>
+        <QuoteSection />
       </div>
     </div>
   );

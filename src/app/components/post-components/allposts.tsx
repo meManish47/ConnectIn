@@ -9,12 +9,12 @@ export default function AllPostsComponent({ userId, userObj }) {
   useEffect(() => {
     async function getPosts() {
       const posts = await getAllPostsOfUser(userId);
-      console.log("CAME", posts);
+      // console.log("CAME", posts);
       setPosts(posts.posts);
     }
     getPosts();
   }, []);
-  console.log("POSTS", posts);
+  // console.log("POSTS", posts);
   if (!posts) {
     return (
       <div className="w-full h-full rounded-2xl flex flex-col justify-center items-center">

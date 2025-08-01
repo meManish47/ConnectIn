@@ -28,7 +28,10 @@ export default function UploadInputField() {
         inputVal
       );
       if (postObj.success) {
-        toast.success("Post created successfully");
+        toast.success(
+          "Post created successfully ..Please Refresh to see Posts",
+          { duration: 5000 }
+        );
         setPosting(false);
         setOpen(false);
       } else console.log(postObj.message);
